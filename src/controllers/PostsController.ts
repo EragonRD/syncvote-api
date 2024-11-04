@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { PostsService } from '../services';
 import { validationResult } from 'express-validator';
+import { categories } from '../constants/categories'; // Assurez-vous que le chemin est correct
+
+
 
 export class PostsController {
   private postsService: PostsService;
@@ -59,4 +62,23 @@ export class PostsController {
       });
     }
   }
+
+
+  async gePoststCategories(request: Request, response: Response): Promise<void> {
+    try {
+      const postsResponse = await this.postsService.getPosts();
+
+      response.status(postsResponse.status).send({
+        ...postsResponse,
+      });
+    } catch (error) {
+      response.status(500).json({
+        status: 500,
+        message: 'Internal server error',
+        data: error
+      });
+    }
+  }
+
+ 
 }

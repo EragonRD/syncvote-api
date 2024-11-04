@@ -1,7 +1,7 @@
 import { User } from '../types/entities/User';
 import { FirestoreCollections } from '../types/firestore';
 import { IResBody } from '../types/api';
-import { firestoreTimestamp } from '../utils/firestore-helpers';
+import { db, firestoreTimestamp } from '../utils/firestore-helpers';
 import {comparePasswords, encryptPassword} from '../utils/password';
 import { Timestamp } from 'firebase/firestore';
 import { formatUserData } from '../utils/formatData';
@@ -43,6 +43,18 @@ export class UsersService {
     }
   }
 
+
+  async deleteUser(id: string): Promise<any> {
+  // Implémentez la logique de suppression ici, par exemple, avec Firebase ou une base de données
+  const userRef = db.users.doc(id);
+  await userRef.delete();
+
+  return {
+    status: 200,
+    message: 'User deleted successfully'
+  };
+}
+
   async getUsers(): Promise<IResBody> {
     const cacheKey = 'users';
     let users: User[] = [];
@@ -64,6 +76,7 @@ export class UsersService {
       }
 
       await this.redisClient.set(cacheKey, JSON.stringify(users));
+      EX : 3600 //expiration du cache 1 heure
     }
 
     return {
@@ -125,4 +138,27 @@ export class UsersService {
       }
     };
   }
+
+  async updateUser(userId: string, userData: User): Promise<IResBody> {
+    const userRef = this.db.users.doc(userId);
+    const userDoc = await userRef.get();
+  
+    if (!userDoc.exists) {
+      return {
+        status: 404,
+        message: 'User not found',
+      };
+    }
+  
+    await userRef.update({
+      ...userData,
+      updatedAt: firestoreTimestamp.now(),
+    });
+  
+    return {
+      status: 200,
+      message: 'User updated successfully!',
+    };
+  }
+  
 }

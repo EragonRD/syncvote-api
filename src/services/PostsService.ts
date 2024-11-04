@@ -10,6 +10,7 @@ export class PostsService {
   constructor(db: FirestoreCollections) {
     this.db = db;
   }
+  
 
   async createPost(postData: Post): Promise<IResBody> {
     const postRef = this.db.posts.doc();
@@ -45,4 +46,6 @@ export class PostsService {
       data: posts
     };
   }
+
+  
 }

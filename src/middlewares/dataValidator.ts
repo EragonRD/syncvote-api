@@ -30,3 +30,9 @@ export const validateCreatePost = [
     )
     .withMessage('All categories must be strings'),
 ];
+
+export const validateUpdateUser = [
+  body('email').optional().isEmail().withMessage('Must be a valid email'),
+  body('username').optional().isLength({ min: 3 }).withMessage('Username must be at least 3 characters long'),
+  
+];

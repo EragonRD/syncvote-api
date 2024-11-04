@@ -1,10 +1,11 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken'; 
 import { Request, Response, NextFunction } from 'express';
 
 interface DecodeToken extends JwtPayload {
   id: string;
   role: string;
 }
+
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization;
@@ -28,7 +29,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     const decode = jwt.verify(tokenParts[1], process.env.SECRET_KEY || '') as DecodeToken;
 
     req.userId = decode.id;
-    req.userRole = decode.role;
+    req.userRole = decode.role; // Assurez-vous que le rôle est bien enregistré
 
     next();
   } catch (e) {
@@ -39,8 +40,16 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.userRole !== 'admin') {
+    return res.status(403).json({ message: 'Require Admin Role!' });
+  }
+  next();
+}
+
 const authJwt = {
   verifyToken,
+  isAdmin, 
 };
 
 export default authJwt;
