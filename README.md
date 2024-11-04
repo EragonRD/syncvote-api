@@ -19,9 +19,10 @@ Cloner le repertoire : git clone https://github.com/EragonRD/syncvote-api
 Ouvrir le repertoire : cd syncvote-api
 Installer les dépendances : npm install
 Configurer l’environnement : Création dd'un fichier ".env" comme suit : 
-FIREBASE_PROJECT_ID= <Votre ID Firebase>
-FIREBASE_CLIENT_EMAIL= <Votre Email Client Firebase>
-FIREBASE_PRIVATE_KEY= <Votre Clé Privée Firebase>
-FIREBASE_DATABASE_URL= <URL de votre base Firestore>
- 
+```plaintext
+FIREBASE_PROJECT_ID= <Your Firebase Project ID>
+FIREBASE_CLIENT_EMAIL= <Your Firebase Client Email>
+FIREBASE_PRIVATE_KEY= <Your Firebase Private Key>
+FIREBASE_DATABASE_URL= <Your Firestore Database URL>
+```
 
