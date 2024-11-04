@@ -105,7 +105,7 @@ export class UserController {
     }
   }
   async updateUser(request: Request, response: Response): Promise<void> {
-    // Vérifiez les erreurs de validation
+    // Vérifiez les erreurs de validation 
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
        response.status(400).json({
