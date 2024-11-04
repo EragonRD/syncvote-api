@@ -15,10 +15,21 @@ SyncVote API est un service backend qui permet de gérer des publications et des
 
 ## Installation 
 
-Cloner le repertoire : git clone https://github.com/EragonRD/syncvote-api
+Cloner le repertoire :
+```plaintext
+git clone https://github.com/EragonRD/syncvote-api
+```
+
 Ouvrir le repertoire : cd syncvote-api
-Installer les dépendances : npm install
+
+Installer les dépendances : 
+
+```plaintext 
+npm install
+```
+
 Configurer l’environnement : Création dd'un fichier ".env" comme suit : 
+
 ```plaintext
 FIREBASE_PROJECT_ID= <Your Firebase Project ID>
 FIREBASE_CLIENT_EMAIL= <Your Firebase Client Email>
