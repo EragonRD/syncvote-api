@@ -1,23 +1,34 @@
 import { Router } from 'express';
-import { PostsController } from '../controllers';
-import { validateCreatePost } from '../middlewares/dataValidator';
-import authJwt from '../middlewares/authJwt';
-
-
+import { PostController } from '../controllers';
+import {
+  validateCreatePost,
+  validateUpdatePost
+} from '../middlewares/dataValidator';
+import authJwt from "../middlewares/authJwt";
 
 export class PostsRoute {
-  private postsController: PostsController;
+  private postController: PostController;
 
-  constructor(postsController: PostsController) {
-    this.postsController = postsController;
+  constructor(postController: PostController) {
+    this.postController = postController;
   }
 
   createRouter(): Router {
     const router = Router();
 
-    router.post('/posts', authJwt.verifyToken, validateCreatePost, this.postsController.createPost.bind(this.postsController));
-    router.get('/posts', this.postsController.getPosts.bind(this.postsController));
-    //router.get('/posts', PostsController.getPostsByCategory);
+    //Creation de post
+    router.post('/posts', validateCreatePost, authJwt.verifyToken, this.postController.createPost.bind(this.postController));
+    //Affichage de post
+    router.get('/posts', this.postController.getPosts.bind(this.postController));
+    router.get('/posts/:id', this.postController.getPostById.bind(this.postController));
+    router.get('/users/:userId/posts', this.postController.getAllPostsByUser.bind(this.postController));
+    router.get('/categories', this.postController.getCategories.bind(this.postController));
+    //Mise a jour du post
+    router.put('/posts/:id', validateUpdatePost, authJwt.verifyToken, this.postController.updatePostById.bind(this.postController));
+    //Suppression du post
+    router.delete('/posts/:id', authJwt.verifyToken, this.postController.deletePostById.bind(this.postController));
+
+
 
     return router;
   }

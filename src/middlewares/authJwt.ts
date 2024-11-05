@@ -1,5 +1,5 @@
-import jwt, { JwtPayload } from 'jsonwebtoken'; 
-import { Request, Response, NextFunction } from 'express';
+import jwt, { JwtPayload } from "jsonwebtoken";
+import {Request, Response, NextFunction} from "express";
 
 interface DecodeToken extends JwtPayload {
   id: string;
@@ -13,7 +13,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     if (!token) {
       return res.status(401).json({
         status: 401,
-        message: 'Unauthorized',
+        message: 'Unauthorized.'
       });
     }
 
@@ -22,34 +22,27 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
       return res.status(401).json({
         status: 401,
-        message: 'Unauthorized',
-      });
+        message: 'Unauthorized.'
+      })
     }
 
     const decode = jwt.verify(tokenParts[1], process.env.SECRET_KEY || '') as DecodeToken;
 
     req.userId = decode.id;
-    req.userRole = decode.role; // Assurez-vous que le rôle est bien enregistré
+    req.userRole = decode.role;
 
     next();
+
   } catch (e) {
     return res.status(401).json({
       status: 401,
-      message: 'Unauthorized',
+      message: 'Unauthorized.',
     });
   }
 };
 
-const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-  if (req.userRole !== 'admin') {
-    return res.status(403).json({ message: 'Require Admin Role!' });
-  }
-  next();
-}
-
 const authJwt = {
   verifyToken,
-  isAdmin, 
 };
 
 export default authJwt;
