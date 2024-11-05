@@ -49,35 +49,61 @@ SyncVote API est un service backend qui permet de gérer des publications et des
 
 ## Configuration
 
-Assurez-vous que Firebase et Firestore sont correctement configurés. Le fichier `.env` doit contenir les identifiants nécessaires pour se connecter à Firebase Firestore.
+   ### Firebase et Firestore
+   Assurez-vous que Firebase et Firestore sont correctement configurés. Le fichier `.env` doit contenir les identifiants nécessaires pour se connecter à Firebase Firestore.
 
-Vous pouvez également configurer des paramètres supplémentaires comme le port du serveur et d'autres configurations spécifiques à l'environnement.
+   ### Redis
+   Redis est utilisé comme système de mise en cache pour améliorer les performances de l'API. Par défaut, le client Redis se connecte à :
+   - Host : 127.0.0.1
+   - Port : 6379
 
----
+   Pour installer Redis :
+
+   **Sur Linux :**
+   ```bash
+   sudo apt-get install redis-server
+   ```
+
+   **Sur macOS :**
+   ```bash
+   brew install redis
+   ```
+
+   
+**Sur Windows :**
+Pour installer Redis sur Windows, il est recommandé d'utiliser le sous-système Windows pour Linux (WSL) avec une image Ubuntu. Voici les étapes à suivre :
+
+Pour démarrer le serveur Redis :
+```bash
+wsl --install
+```
+Redémarrez votre ordinateur si nécessaire.
+Installez Ubuntu depuis le Microsoft Store.
+
+Configurer Ubuntu :
+
+Lancez Ubuntu depuis le menu Démarrer.
+Suivez les instructions pour configurer votre utilisateur et mot de passe.
+
+Installer Redis sur Ubuntu :
+
+```bash
+sudo apt update
+sudo apt install redis-server
+```
+
+Puis démarrer le serveur : 
+
+```bash
+sudo service redis-server start
+redis-cli ping
+```
+
 
 ## Postman
 
 Pour faciliter les tests de l'API SyncVote, une collection Postman est fournie. Cette collection contient des requêtes prédéfinies pour l'authentification, la gestion des utilisateurs, les opérations sur les publications et les commentaires, ainsi que les actions de vote.
 
-### Étapes pour importer la collection dans Postman
-
-1. **Télécharger la Collection JSON :** 
-   - Sauvegardez le fichier `postmanJSON.json` sur votre ordinateur.
-
-2. **Ouvrir Postman :** 
-   - Lancez l'application Postman.
-
-3. **Importer la Collection :**
-   - Dans Postman, cliquez sur le bouton "Import" (généralement situé en haut à gauche)
-   - Dans la boîte de dialogue, sélectionnez "Upload Files"
-   - Naviguez jusqu'à l'emplacement où vous avez sauvegardé `postmanJSON.json`
-   - Sélectionnez-le et cliquez sur "Ouvrir"
-   - La collection apparaîtra dans la barre latérale sous le nom "syncvote"
-
-4. **Configuration de l'Environnement (Optionnel) :**
-   - Pour l'autorisation, la collection utilise la variable d'environnement `bearer_token`
-   - Assurez-vous d'avoir un environnement configuré dans Postman avec cette variable
-   - Après connexion, la requête de login configurera automatiquement ce token
 
 ---
 
