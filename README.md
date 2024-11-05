@@ -1,4 +1,4 @@
-# SyncVote API $${\color{red}Debbah Rabah}$$
+# SyncVote API $${\color{red}Debbah \space\ Rabah}$$
 
 SyncVote API est un service backend qui permet de gérer des publications et des commentaires avec un système de votes. Il inclut des routes pour les utilisateurs, les publications, les commentaires, et les votes. L'API est construite avec TypeScript, utilise Express pour la gestion des routes et Firestore comme base de données.
 
